@@ -1,0 +1,11 @@
+{
+  "name": "api-holerite",
+  "version": "1.0.0",
+  "description": "API de holerite",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "José Romualdo",
+  "license": "ISC"
+}
