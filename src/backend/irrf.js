@@ -13,6 +13,26 @@ module.exports = {
         return faixas;
     },
 
+    encontrarFaixa: function(salarioBase){
+        let faixas = this.obterFaixas();
+
+        for (let i = 0; i < faixas.length; i++) {
+            const faixaAtual = faixas[i];
+
+            if (salarioBase >= faixaAtual.inicioFaixa && 
+                salarioBase <= faixaAtual.fimFaixa) {
+                const descontoFaixa = this.calcularDescontoFaixa(faixaAtual);
+                descontoFaixas.push(descontoFaixa);
+            }
+            else {
+                const faixaAnterior = faixas[i - 1];
+                const descontoFaixa = this.calcularDescontoResidual(salarioBase, faixaAnterior, faixaAtual);
+                descontoFaixas.push(descontoFaixa);
+                break;
+            }
+        }
+    }
+
     calcularDeducaoDependentes: function (qtdeDependente) {
         const valorDeducaoPordependente = 189.59;
         return qtdeDependente * valorDeducaoPordependente;
@@ -25,19 +45,7 @@ module.exports = {
         return salarioBase
     },
 
-
-    calcularDescontoFaixa: function (faixa) {
-        let totalFaixa = faixa.fimFaixa - faixa.inicioFaixa;
-        let descontoFaixa = totalFaixa * faixa.aliquota;
-
-        return descontoFaixa;
-    },
-
-    calcularDescontoResidual: function (salarioBase, faixaAnterior, faixaAtual) {
-        let residual = salarioBase - faixaAnterior.fimFaixa;
-        const descontoFaixa = residual * faixaAtual.aliquota;
-        return descontoFaixa;
-    },
+   
 
 
     calcularDescontoProgressivo: function (salarioBase) {
