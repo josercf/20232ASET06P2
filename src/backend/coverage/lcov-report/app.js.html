@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for index.js</title>
+    <title>Code coverage report for app.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> index.js</h1>
+        <h1><a href="index.html">All files</a> app.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">86.2% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>28/28</span>
+                <span class='fraction'>25/29</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">86.2% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>28/28</span>
+                <span class='fraction'>25/29</span>
             </div>
         
             
@@ -90,7 +90,8 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -107,44 +108,46 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const inss = require('./inss');
-const irrf = require('./irrf');
-&nbsp;
-module.exports = {
-    calcularDeducaoDependentes: function (qtdeDependente) {
-        const valorDeducaoPordependente = 189.59;
-        return qtdeDependente * valorDeducaoPordependente;
-    },
-&nbsp;
-    calcularSalarioBase: function (salarioBruto, descontoINSS, qtdeDependentes) {
-        let deducaoDependentes = this.calcularDeducaoDependentes(qtdeDependentes);
-&nbsp;
-        const salarioBase = salarioBruto - descontoINSS - deducaoDependentes;
-        return salarioBase;
-    },
-    
-    calcularSalarioLiquido: function (salarioBruto, dependentes) {
-        var descontoINSS = inss.calcularDescontoProgressivo(salarioBruto);
-        
-        var salarioBase = this.calcularSalarioBase(salarioBruto, descontoINSS, dependentes);
-&nbsp;
-        var descontoIRRF = irrf.calculardesconto(salarioBase);
-&nbsp;
-        const salarioLiquido = salarioBruto - descontoINSS - descontoIRRF;
-        
-        return {descontoINSS, descontoIRRF, salarioLiquido};
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">//app.js
+const index = require('./index');
+const express = require('express');
+const app = express();
+const port = 3000;
+ 
+app.use(express.json());
+app.get('/', (req, res) =&gt; res.json({ message: 'Funcionando!' }));
+ 
+// GET /aplicarDesconto
+app.post('/calcular-salario', (req, res) =&gt; {
+    try {
+        const salarioBruto = parseFloat(req.body.salarioBruto);
+        const dependentes = parseFloat(req.body.dependentes);
+        const memoriaCalculo = index.calcularSalarioLiquido(salarioBruto, dependentes);
+        res.json(memoriaCalculo);    
+    } catch (error) {
+        console.error(error);
     }
-}</pre></td></tr></table></pre>
+    
+})
+ 
+if (require.main === module) <span class="branch-0 cbranch-no" title="branch not covered" >{</span>
+<span class="cstat-no" title="statement not covered" >    //inicia o servidor</span>
+<span class="cstat-no" title="statement not covered" >    app.listen(port)</span>
+<span class="cstat-no" title="statement not covered" >    console.log('API funcionando!')</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+ 
+module.exports = app</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

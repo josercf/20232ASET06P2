@@ -45,7 +45,7 @@ module.exports = {
                 descontoFaixas.push(descontoFaixa);
             }
             else {
-                const faixaAnterior = faixas[i - 1];
+                const faixaAnterior = faixas[i <= 0 ? i - 1 : i];
                 const descontoFaixa = this.calcularDescontoResidual(salarioBruto, faixaAnterior, faixaAtual);
                 descontoFaixas.push(descontoFaixa);
                 break;

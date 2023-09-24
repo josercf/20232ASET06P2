@@ -13,63 +13,41 @@ module.exports = {
         return faixas;
     },
 
-    encontrarFaixa: function(salarioBase){
-        let faixas = this.obterFaixas();
-
-        for (let i = 0; i < faixas.length; i++) {
-            const faixaAtual = faixas[i];
-
-            if (salarioBase >= faixaAtual.inicioFaixa && 
-                salarioBase <= faixaAtual.fimFaixa) {
-                const descontoFaixa = this.calcularDescontoFaixa(faixaAtual);
-                descontoFaixas.push(descontoFaixa);
-            }
-            else {
-                const faixaAnterior = faixas[i - 1];
-                const descontoFaixa = this.calcularDescontoResidual(salarioBase, faixaAnterior, faixaAtual);
-                descontoFaixas.push(descontoFaixa);
-                break;
-            }
-        }
-    }
-
-    calcularDeducaoDependentes: function (qtdeDependente) {
-        const valorDeducaoPordependente = 189.59;
-        return qtdeDependente * valorDeducaoPordependente;
+    faixaContemplaValor: function(valor, faixa)
+    {
+        return valor >= faixa.inicioFaixa && 
+               valor <= faixa.fimFaixa;
     },
 
-    calcularSalarioBase: function(salarioBruto, valorINSS, qtdeDependente){
-        let deducaoDependentes = this.calcularDeducaoDependentes(qtdeDependente);
-        let salarioBase = salarioBruto - valorINSS - deducaoDependentes;
+    calcularDescontoFaixa: function (salarioBase, faixa) {
+        if(faixa.aliquota == 0){
+            return 0.0;
+        }
+
+        let descontoFaixa = salarioBase * faixa.aliquota;
+        let descontoLiquido = 0;
         
-        return salarioBase
+        if(descontoFaixa > 0){
+            descontoLiquido = descontoFaixa - faixa.deducao;
+        }
+       
+        return descontoLiquido;
     },
 
-   
-
-
-    calcularDescontoProgressivo: function (salarioBase) {
-        let descontoFaixas = [];
+    calculardesconto: function(salarioBase){
         let faixas = this.obterFaixas();
 
         for (let i = 0; i < faixas.length; i++) {
             const faixaAtual = faixas[i];
 
-            if (salarioBase >= faixaAtual.fimFaixa) {
-                const descontoFaixa = this.calcularDescontoFaixa(faixaAtual);
-                descontoFaixas.push(descontoFaixa);
-            }
-            else {
-                const faixaAnterior = faixas[i - 1];
-                const descontoFaixa = this.calcularDescontoResidual(salarioBase, faixaAnterior, faixaAtual);
-                descontoFaixas.push(descontoFaixa);
-                break;
+            if (this.faixaContemplaValor(salarioBase, faixaAtual)) {
+                const descontoFaixa = this.calcularDescontoFaixa(salarioBase, faixaAtual);
+                return Math.round(descontoFaixa * 100) / 100;
             }
         }
 
-        let descontoIRRF = descontoFaixas.reduce((acumulado, atual) => acumulado + atual, 0);
-
-        //(n * 100) / 100 - utilizado para fazer o arredondamento para 2 casas decimais
-        return Math.round(descontoIRRF * 100) / 100;
-    }
+        //(n * 100) / 100 - utilizado para fazer o arredondamento 
+        // para 2 casas decimais
+        return 0;
+    },
 }
