@@ -2,11 +2,11 @@ module.exports = {
     obterFaixas: function () {
         let faixas = [];
 
-        const faixa01 = { inicioFaixa: 0, fimFaixa: 1320.00, aliquota: 0.075 }
-        const faixa02 = { inicioFaixa: 1320.02, fimFaixa: 2571.29, aliquota: 0.09 }
-        const faixa03 = { inicioFaixa: 2571.30, fimFaixa: 3856.94, aliquota: 0.12 }
-        const faixa04 = { inicioFaixa: 3856.95, fimFaixa: 7507.49, aliquota: 0.14 }
-        const teto = { inicioFaixa: 7507.50, fimFaixa: 1_000_000, aliquota: -1 }
+        const faixa01 = { inicioFaixa: 0, fimFaixa: 1320.00, aliquota: 0.075 };
+        const faixa02 = { inicioFaixa: 1320.02, fimFaixa: 2571.29, aliquota: 0.09 };
+        const faixa03 = { inicioFaixa: 2571.30, fimFaixa: 3856.94, aliquota: 0.12 };
+        const faixa04 = { inicioFaixa: 3856.95, fimFaixa: 7507.49, aliquota: 0.14 };
+        const teto = { inicioFaixa: 7507.50, fimFaixa: 1000000, aliquota: -1 };
 
         faixas.push(faixa01, faixa02, faixa03, faixa04, teto);
 
