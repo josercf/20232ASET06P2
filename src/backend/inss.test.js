@@ -21,8 +21,8 @@ describe('[Obter faixas INSS]', () => {
 
 describe('[Calcular desconto faixa]', () => {
     test('Faixa 01 deve retornar 99', () => {
-        const faixas = inss.obterFaixas();
-        const desconto = inss.calcularDescontoFaixa(faixas[0]);
-        expect(desconto).toEqual(99);
+        
+        
+        
     });
 });

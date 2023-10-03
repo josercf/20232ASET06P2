@@ -20,16 +20,8 @@ module.exports = {
     },
 
     calcularDescontoFaixa: function (salarioBase, faixa) {
-        if(faixa.aliquota == 0){
-            return 0.0;
-        }
-
-        let descontoFaixa = salarioBase * faixa.aliquota;
         let descontoLiquido = 0;
-        
-        if(descontoFaixa > 0){
-            descontoLiquido = descontoFaixa - faixa.deducao;
-        }
+       
        
         return descontoLiquido;
     },
